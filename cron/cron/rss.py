@@ -2,7 +2,9 @@ import feedparser
 
 
 def merge_authors(authors):
-    auth = [x["email"] for x in authors if authors]
+    auth = []
+    if authors:
+        auth = [x["email"] for x in authors]
     return ":".join(auth)
 
 
