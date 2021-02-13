@@ -30,7 +30,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./webapp:/app
+      - ./config:/app
       - ./database:/database
     networks:
       - app

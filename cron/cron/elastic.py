@@ -12,7 +12,7 @@ class Index:
         """
         self.es = es
         self.data = data
-        self.index_name = "pypi_package"
+        self.index_name = "search"
 
     def clear_index(self):
         """ remove all documents and put mapping, if index not exists create it """
