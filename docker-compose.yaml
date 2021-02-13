@@ -4,10 +4,13 @@ services:
   elastic:
     image: elasticsearch:7.10.1
     container_name: elastic
+    hostname: elastic
     ports:
     - 9200:9200
     environment:
       - discovery.type=single-node
+    networks:
+      - app
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.1
@@ -16,3 +19,34 @@ services:
       ELASTICSEARCH_HOSTS: http://elastic:9200
     ports:
     - 5601:5601
+    networks:
+      - app
+
+  django:
+    container_name: django
+    build:
+      context: .
+      dockerfile: ./build/django/Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./webapp:/app
+    networks:
+      - app
+
+
+  crontab:
+    container_name: crontab
+    working_dir: /app
+    command: "sleep inf"
+    build:
+      context: .
+      dockerfile: ./build/cron/Dockerfile
+    volumes:
+      - ./cron:/app
+    networks:
+      - app
+
+
+networks:
+  app:

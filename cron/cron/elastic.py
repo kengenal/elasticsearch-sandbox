@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch
 
-from cron.cron.mapping import pypi_package
+from .mapping.pypi import pypi_package
 
 
 class Index:
