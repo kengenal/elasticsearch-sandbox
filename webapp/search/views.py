@@ -1,7 +1,12 @@
 from django.http import HttpResponse
-from .models import PypiPackage
+
+from .documents import PypiPackageDocument
 
 
 def index(request):
-    print(PypiPackage.objects.all())
+    s = PypiPackageDocument.search()
+    for hit in s:
+        print(
+            "Car name : {}, description {}".format(hit.title, hit.description)
+        )
     return HttpResponse("hello world")
