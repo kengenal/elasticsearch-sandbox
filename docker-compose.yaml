@@ -31,6 +31,7 @@ services:
       - 8000:8000
     volumes:
       - ./webapp:/app
+      - ./database:/database
     networks:
       - app
 
@@ -38,7 +39,6 @@ services:
   crontab:
     container_name: crontab
     working_dir: /app
-    command: "sleep inf"
     build:
       context: .
       dockerfile: ./build/cron/Dockerfile
