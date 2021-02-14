@@ -10,8 +10,8 @@ SQL_PATH = os.path.join(Path(__file__).resolve().parent.parent.parent / 'databas
 
 
 class ConnectionException(Exception):
-    def __init__(self):
-        super().__init__("Connection error")
+    def __init__(self, db):
+        super().__init__(f"{db.upper()}: Connection error")
 
 
 class AbstractConnection(ABC):
@@ -33,8 +33,8 @@ class ElasticConnect(AbstractConnection):
                 sniff_on_connection_fail=True,
                 sniffer_timeout=15
             )
-        except Exception as err:
-            raise ConnectionException()
+        except Exception:
+            raise ConnectionException("elastic")
 
 
 class SqlConnect(AbstractConnection):
@@ -46,10 +46,9 @@ class SqlConnect(AbstractConnection):
         self.conn = None
 
     def connect(self):
-        print(self.db_path)
         try:
             conn = sqlite3.connect(self.db_path)
             self.conn = conn
             self.cursor = conn.cursor()
         except Exception:
-            raise ConnectionException()
+            raise ConnectionException("sqlite")

@@ -19,7 +19,6 @@ RUN chmod +x /entrypoint
 
 USER python
 
-
 EXPOSE 8000
 
 ENTRYPOINT ["sh", "/entrypoint"]

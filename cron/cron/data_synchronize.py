@@ -12,8 +12,7 @@ class DataSync:
             self.sync_sql()
             self.sync_elastic()
         except Exception as err:
-            print(err)
-            raise ConnectionException()
+            raise ConnectionException(err)
 
     def sync_sql(self):
         conn = SqlConnect()

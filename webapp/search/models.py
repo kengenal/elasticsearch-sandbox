@@ -1,7 +1,9 @@
 from django.db import models
 
-
 # Create your models here.
+from elasticsearch_dsl import Q
+from django.db.models import Q as DQ
+
 
 class PypiPackage(models.Model):
     title = models.CharField(max_length=120)
@@ -10,3 +12,15 @@ class PypiPackage(models.Model):
     link = models.URLField()
     version = models.CharField(max_length=10)
     authors = models.CharField(max_length=255)
+
+    @staticmethod
+    def get_db_data(fil):
+        if fil:
+            return PypiPackage.objects.filter(
+                DQ(author__icontains=fil)
+                | DQ(version__icontains=fil)
+                | DQ(authors__icontains=fil)
+                | DQ(author__icontains=fil)
+                | DQ(title__icontains=fil)
+            ).all()
+        return PypiPackage.objects.all()

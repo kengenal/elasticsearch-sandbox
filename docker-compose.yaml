@@ -29,12 +29,13 @@ services:
       dockerfile: ./build/django/Dockerfile
     ports:
       - 8000:8000
+    environment:
+      - PAGINATION=10
     volumes:
-      - ./config:/app
+      - ./webapp:/app
       - ./database:/database
     networks:
       - app
-
 
   crontab:
     container_name: crontab
@@ -42,6 +43,8 @@ services:
     build:
       context: .
       dockerfile: ./build/cron/Dockerfile
+    depends_on:
+      - elastic
     volumes:
       - ./cron:/app
       - ./database:/database

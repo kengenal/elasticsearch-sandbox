@@ -1,6 +1,7 @@
-
+from django.conf import settings
 from django_elasticsearch_dsl import Document
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl import Q
 
 from .models import PypiPackage
 
@@ -14,7 +15,7 @@ class PypiPackageDocument(Document):
 
     class Django:
         model = PypiPackage
-
+        queryset_pagination = settings.PAGINATION
         fields = [
             'title',
             'author',
@@ -23,3 +24,15 @@ class PypiPackageDocument(Document):
             'version',
             'authors'
         ]
+
+    @staticmethod
+    def get_elastic_data(fil):
+        if fil:
+            return PypiPackageDocument.search().filter(
+                Q("match", title=fil)
+                | Q("match", title=fil)
+                | Q("match", author=fil)
+                | Q("match", authors=fil)
+                | Q("match", title=fil)
+            )
+        return PypiPackageDocument.search()

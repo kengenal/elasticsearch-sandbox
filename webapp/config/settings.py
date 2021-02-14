@@ -82,11 +82,26 @@ DATABASES = {
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': 'elastic:9200'
     },
 }
 
-PAGINATION = 10
+PAGINATION = os.getenv("PAGINATION", 10)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

@@ -1,21 +1,38 @@
+from unittest import mock
+
 import pytest
 from django.urls import reverse
 
 pytestmark = pytest.mark.django_db
 
 
+def mock_elastic_exception(*args, **kwargs):
+    raise Exception()
+
+
+ELASTIC_PATH = 'search.documents.PypiPackageDocument.get_elastic_data'
+
+
 class TestPypiView:
-    def test_without_any_parameters_should_be_return_status_ok(self, client, package_model):
-        rq = client.get(reverse('search'))
 
-        assert rq.status_code == 200
+    @pytest.mark.parametrize('expect, get_query', [
+        [200, {}],
+        [404, {'page': 8888}],
+        [200, {'filter': 'example'}],
+    ])
+    def test_with_elastic(self, client, package_model, expect, get_query):
+        with mock.patch(ELASTIC_PATH, new=package_model):
+            rq = client.get(reverse('search'), get_query)
 
-    def test_without_with_filter_parameters_should_be_return_status_ok(self, client, package_model):
-        rq = client.get(reverse('search'), {'filter': 'example'})
+            assert rq.status_code == expect
 
-        assert rq.status_code == 200
+    @pytest.mark.parametrize('expect, get_query', [
+        [200, {}],
+        [404, {'page': 8888}],
+        [200, {'filter': 'example'}],
+    ])
+    def test_with_database(self, client, package_model, expect, get_query):
+        with mock.patch(ELASTIC_PATH, new=mock_elastic_exception):
+            rq = client.get(reverse('search'), get_query)
 
-    def test_without_with_pagination_should_be_return_status_not_found(self, client, package_model):
-        rq = client.get(reverse('search'), {'page': '8888'})
-
-        assert rq.status_code == 404
+            assert rq.status_code == expect
