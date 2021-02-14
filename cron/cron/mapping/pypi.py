@@ -4,6 +4,7 @@ pypi_package = {
             "properties": {
                 "author": {
                     "type": "text",
+                    "analyzer": "standard",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
@@ -13,6 +14,7 @@ pypi_package = {
                 },
                 "authors": {
                     "type": "text",
+                    "analyzer": "standard",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
@@ -22,6 +24,7 @@ pypi_package = {
                 },
                 "description": {
                     "type": "text",
+                    "analyzer": "standard",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
@@ -31,6 +34,7 @@ pypi_package = {
                 },
                 "link": {
                     "type": "text",
+                    "analyzer": "standard",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
@@ -40,6 +44,7 @@ pypi_package = {
                 },
                 "title": {
                     "type": "text",
+                    "analyzer": "standard",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
@@ -48,6 +53,7 @@ pypi_package = {
                     }
                 },
                 "version": {
+                    "analyzer": "standard",
                     "type": "float"
                 }
             }

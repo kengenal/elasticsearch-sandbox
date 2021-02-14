@@ -2,6 +2,7 @@ from django.conf import settings
 from django_elasticsearch_dsl import Document
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import Q
+from elasticsearch_dsl.query import MultiMatch
 
 from .models import PypiPackage
 
@@ -28,11 +29,16 @@ class PypiPackageDocument(Document):
     @staticmethod
     def get_elastic_data(fil):
         if fil:
-            return PypiPackageDocument.search().filter(
-                Q("match", title=fil)
-                | Q("match", title=fil)
-                | Q("match", author=fil)
-                | Q("match", authors=fil)
-                | Q("match", title=fil)
+            return PypiPackageDocument.search().query(
+                Q(
+                    'bool',
+                    should=[
+                        Q('match', author=fil),
+                        Q('match', authors=fil),
+                        Q('match', title=fil),
+                        Q('match', version=fil),
+                        Q('match', description=fil),
+                    ],
+                )
             )
         return PypiPackageDocument.search()
