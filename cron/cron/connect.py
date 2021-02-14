@@ -5,7 +5,7 @@ from pathlib import Path
 
 from elasticsearch import Elasticsearch
 
-ELASTIC_HOSTS = ["elastic"]
+ELASTIC_HOSTS = ['elastic', 'localhost']
 SQL_PATH = os.path.join(Path(__file__).resolve().parent.parent.parent / 'database/db.sqlite3')
 
 
@@ -29,9 +29,6 @@ class ElasticConnect(AbstractConnection):
         try:
             self.es = Elasticsearch(
                 hosts=ELASTIC_HOSTS,
-                sniff_on_start=True,
-                sniff_on_connection_fail=True,
-                sniffer_timeout=15
             )
         except Exception:
             raise ConnectionException("elastic")
