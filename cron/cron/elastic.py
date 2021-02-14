@@ -12,14 +12,14 @@ class Index:
         """
         self.es = es
         self.data = data
-        self.index_name = "search"
+        self.index_name = "pypi_package"
 
     def clear_index(self):
         """ remove all documents and put mapping, if index not exists create it """
-        self.es.delete_by_query(index=self.index_name, body={"query": {"match_all": {}}})
-        self.es.indices.put_mapping(index=self.index_name, body=pypi_package, ignore=[400])
         if not self.es.indices.exists(index=self.index_name):
             self.es.indices.create(index=self.index_name)
+        self.es.delete_by_query(index=self.index_name, body={"query": {"match_all": {}}})
+        self.es.indices.put_mapping(index=self.index_name, body=pypi_package, ignore=[400])
 
     def create(self):
         """ Create documents form data """

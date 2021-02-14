@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from cron.cron.rss import PackagesInfo, merge_authors
+from cron.rss import PackagesInfo, merge_authors
 
 
 class RssDataMock:

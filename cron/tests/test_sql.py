@@ -1,7 +1,7 @@
 import pytest
 
-from cron.cron.connect import SqlConnect
-from cron.cron.sql import UpdateTable
+from cron.connect import SqlConnect
+from cron.sql import UpdateTable
 
 data = [
     {
