@@ -10,12 +10,14 @@ RUN chmod 755 /app
 COPY --chown=python:python ./webapp/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
+COPY --chown=python:python ./webapp/requirements_dev.txt /requirements_dev.txt
+RUN pip install -r /requirements_dev.txt
+
 COPY --chown=python:python ./build/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
 USER python
-
 
 EXPOSE 8000
 

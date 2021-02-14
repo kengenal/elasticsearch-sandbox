@@ -29,21 +29,25 @@ services:
       dockerfile: ./build/django/Dockerfile
     ports:
       - 8000:8000
+    environment:
+      - PAGINATION=10
     volumes:
       - ./webapp:/app
+      - ./database:/database
     networks:
       - app
-
 
   crontab:
     container_name: crontab
     working_dir: /app
-    command: "sleep inf"
     build:
       context: .
       dockerfile: ./build/cron/Dockerfile
+    depends_on:
+      - elastic
     volumes:
       - ./cron:/app
+      - ./database:/database
     networks:
       - app
 

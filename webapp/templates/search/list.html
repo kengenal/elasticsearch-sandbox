@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Packages{% endblock %}
+
+{% block content %}
+    <!-- As a heading -->
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Pypi packages</span>
+    </nav>
+    <div class="container">
+        <form class="form-inline row justify-content-center" method="GET">
+            <div class="form-group mb-2 p-3">
+                <label for="inputSearch" class="sr-only">Search</label>
+                <input type="text" class="form-control" id="inputSearch" placeholder="search" name="filter">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Description</th>
+                <th scope="col">Link</th>
+                <th scope="col">Version</th>
+                <th scope="col">Authors</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ data.title }}</td>
+                    <td>{{ data.author }}</td>
+                    <td>{{ data.description }}</td>
+                    <td>{{ data.link }}</td>
+                    <td>{{ data.version }}</td>
+                    <td>{{ data.authors }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if page_obj.has_other_pages %}
+            <section class="container p-3">
+                <nav aria-label="Page navigation example">
+                    <div class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <div class="page-item">
+                                <a class="page-link" href="?page=1">First</a>
+                            </div>
+                            <div class="page-item">
+                                <a class="page-link"
+                                   href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            </div>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <div class="page-item active">
+                                    <a class="page-link " href="?page={{ num }}">{{ num }}</a>
+                                </div>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <div class="page-item">
+                                    <a class="page-link active" href="?page={{ num }}">{{ num }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <div class="page-item ">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </div>
+                            <div class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </nav>
+            </section>
+        {% endif %}
+
+    </div>
+{% endblock %}
