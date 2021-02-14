@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.db.models import Q as DQ
+from django.db.models import Q
 
 
 class PypiPackage(models.Model):
@@ -15,10 +15,11 @@ class PypiPackage(models.Model):
     def get_db_data(fil):
         if fil:
             return PypiPackage.objects.filter(
-                DQ(author__icontains=fil)
-                | DQ(version__icontains=fil)
-                | DQ(authors__icontains=fil)
-                | DQ(author__icontains=fil)
-                | DQ(title__icontains=fil)
+                Q(author__icontains=fil)
+                | Q(version__icontains=fil)
+                | Q(authors__icontains=fil)
+                | Q(author__icontains=fil)
+                | Q(title__icontains=fil)
             ).all()
         return PypiPackage.objects.all()
+
