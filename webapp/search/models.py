@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from elasticsearch_dsl import Q
 from django.db.models import Q as DQ
 
 

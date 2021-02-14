@@ -11,7 +11,7 @@ SQL_PATH = os.path.join(Path(__file__).resolve().parent.parent.parent / 'databas
 
 class ConnectionException(Exception):
     def __init__(self, db):
-        super().__init__(f"{db.upper()}: Connection error")
+        super().__init__(f"{db}: Connection error")
 
 
 class AbstractConnection(ABC):
