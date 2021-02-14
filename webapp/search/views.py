@@ -1,12 +1,8 @@
-from django.http import HttpResponse
+from django.views.generic import ListView
 
-from .documents import PypiPackageDocument
+from .models import PypiPackage
 
 
-def index(request):
-    s = PypiPackageDocument.search()
-    for hit in s:
-        print(
-            "Car name : {}, description {}".format(hit.title, hit.description)
-        )
-    return HttpResponse("hello world")
+class PypiPackageView(ListView):
+    model = PypiPackage
+    template_name = 'search/list.html'

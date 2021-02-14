@@ -15,3 +15,6 @@ class PackageInfoFactory(factory.django.DjangoModelFactory):
     version = factory.Sequence(lambda n: str(randint(0, 10)))
     description = Faker('user_name')
     authors = Faker('name')
+
+
+

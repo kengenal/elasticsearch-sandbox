@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import index
+from .views import PypiPackageView
 
 
 urlpatterns = [
-    path("", index, name='search')
+    path("", PypiPackageView.as_view(), name='search')
 ]
