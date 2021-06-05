@@ -8,7 +8,7 @@ services:
     ports:
     - 9200:9200
     environment:
-      - discovery.type=single-node
+      discovery.type: single-node
     networks:
       - app
 
@@ -30,27 +30,25 @@ services:
     ports:
       - 8000:8000
     environment:
-      - PAGINATION=10
+      PAGINATION: 10
+      ELASTICSEARCH_HOSTS: http://elastic:9200
     volumes:
-      - ./webapp:/app
-      - ./database:/database
+      - ./:/app
     networks:
       - app
 
-  crontab:
-    container_name: crontab
+  cron:
+    container_name: cron
     working_dir: /app
     build:
       context: .
       dockerfile: ./build/cron/Dockerfile
-    depends_on:
-      - elastic
     volumes:
-      - ./cron:/app
-      - ./database:/database
+      - ./:/app
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:9200
     networks:
       - app
-
 
 networks:
   app:

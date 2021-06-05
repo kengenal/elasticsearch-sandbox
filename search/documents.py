@@ -2,7 +2,6 @@ from django.conf import settings
 from django_elasticsearch_dsl import Document
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import Q
-from elasticsearch_dsl.query import MultiMatch
 
 from .models import PypiPackage
 
