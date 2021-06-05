@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from cron.rss import PackagesInfo, merge_authors
+from search.rss import PackagesInfo, merge_authors
 
 
 class RssDataMock:
@@ -68,9 +68,8 @@ def test_get_package_info_with_correct_url_should_be_return_dictionary(package_i
 
     package_info._get_data = Mock(return_value=RssDataMock.parse())
     package_info.get_version = Mock(return_value=RssMockVersion.parse())
-
     package_info.fetch()
-    print(package_info.data)
+
     assert len(package_info.data[0].keys()) == 6
 
 

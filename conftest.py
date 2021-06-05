@@ -1,6 +1,6 @@
 import pytest
 
-from webapp.search.tests.factories import PackageInfoFactory
+from search.tests.factories import PackageInfoFactory
 
 
 @pytest.fixture()

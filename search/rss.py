@@ -48,5 +48,5 @@ class PackagesInfo:
         try:
             d = feedparser.parse(self.version_url.format(name))
             return d["entries"][0]["title"]
-        except:
+        except KeyError:
             return None
